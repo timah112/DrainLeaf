@@ -20,9 +20,9 @@ var numOfTries = 6;
 var correctGuessCounter = 0;
 
 //Points Variables: 
-var totalPoints = 0;
+//static var totalPoints = 0;
 var pointsEarned = 5;
-var finalTotalPoints;
+ var finalTotalPoints;
 
 
 //----------------------------------------------
@@ -32,14 +32,19 @@ var finalTotalPoints;
  * It also initializes the "letter variable".
  */
 var onLoadFuction= window.addEventListener( "load", function( windowLoadE ) {
-	
+	document.getElementById("numOfTries").innerHTML = numOfTries;
+	document.getElementById("pointsValue").innerHTML = this.totalPoints;
 	addFields();
+	
 });
 
-
+function userPoints(totalPoints){
+	this.totalPoints = totalPoints;
+}
+var setPoints = new userPoints(0);
 /**
 This function checks if the counter for a field thats clicked is more than once, and if so if wont call the addField Method. 
-(Basically prevents the user from multiple button clicks)
+(Basically prevents the user from multiple button clicks and prevents the added letter fields on top of each other)
 **/	
 function onClickOnlyOnce(){
 	if (addFieldCounter < 1){
@@ -53,6 +58,7 @@ function onClickOnlyOnce(){
 
 /**
 This function is called as a closure inside the onClickMore
+It creates the input fields in the webpage depending on the length of the fruit:
 */			
 function addFields(){
 	addFieldCounter++;
@@ -83,7 +89,6 @@ function addFields(){
 			document.getElementById("textBox").appendChild(inputField[i]).readOnly= true; // make the field boxes read-only
 
 		}	
-	
 }
 
 /**
@@ -98,7 +103,7 @@ function displayFields(){
             p = document.createElement( "p" );
         }
         letter = String.fromCharCode( i );
-        button = document.createElement( "button" );
+        button = document.createElement("button");
         button.innerHTML = letter;
         button.setAttribute( "data-letter", letter );
         button.onclick = function( e ) { setLetter( this.getAttribute( "data-letter" ) ); };
@@ -112,18 +117,27 @@ function displayFields(){
 
 /**
  * @param {*} letter 
- * This function adds all the used letters to the botton of the keyboard. Its called eventListener function above.
+ * This function adds all the used letters to the bottom of the keyboard. Its called eventListener function above.
  * It runs each time a letter is clicked on in the keyboard
  * If the num of wrong tries is greater than 0, it will show an alert.
  */
+var chosenLetterFromKeys = [];
 function setLetter( letter ) {
     var div = document.getElementById( "name" );
-    div.innerHTML = div.innerHTML + letter;
-	if(numOfTries > -1){
+	div.innerHTML = div.innerHTML + letter;
+	//chosenLetterFromKeys.push(letter);
+	if(isWordFound){
+		onClickOnlyOnce();
+	}
+	else if(chosenLetterFromKeys.includes(letter)){
+		swal("You already selected that letter. Please select another letter.");
+	}
+	else if(numOfTries > -1){
+		chosenLetterFromKeys.push(letter);
 		findIndex(letter, selectedRandomFruit);
-	}else{
-		swal("Sorry, you are out of tries. The correct word was: " + selectedRandomFruit + "\n  \n \Click 'New Game' to continue");
-		
+	} 
+	else{
+		swal("Sorry, you are out of tries. The correct word was: " + selectedRandomFruit + "\n  \n \Click 'New Game' to continue");		
 	}	
 }
 
@@ -143,34 +157,34 @@ function enterIntoField(inputField, letter){
 Function that compares the current letter with the fruit variable. If the Fruit String contains that letter,
 it gets its index and inserts that letter into that field index.
 **/
-
+var index = [];
+var isWordFound = false;
 function findIndex(letter, selectedRandomFruit){
-	var index = [];
 	
-	var isFound = false;
+	var isLetterFound = false;
 	for (var i =0; i < fruitLength; i++){
 		if (selectedRandomFruit.charAt(i) == letter){
 			correctGuessCounter++;
 			index[i] = i;
-			isFound = true;
+			isLetterFound = true;
 			inputField[i].value = letter; //this is initializing the inputField Object to its proper value at the proper index.
-			selectedLetters.push(letter);
+			
 		}
 	}
-	if(!isFound){
+	if(!isLetterFound){
 		document.getElementById("numOfTries").innerHTML = numOfTries;
 		numOfTries--;
 		selectedLetters.push(letter);
 
 	}else if(correctGuessCounter === fruitLength){
-		totalPoints+= pointsEarned;
-		sessionStorage.setItem("totalPoints", totalPoints);
+		setPoints.totalPoints += pointsEarned;
+		sessionStorage.setItem("totalPoints", setPoints.totalPoints);
 		finalTotalPoints = sessionStorage.getItem("totalPoints");
 		
 		document.getElementById("pointsValue").innerHTML = finalTotalPoints;
-		
-		/** alert("CONGRATS! You got the right word")**/
+		isWordFound = true;
 		swal("CONGRATS!", ", You got the right word!", "success");
+
 	}
 	return index;
 }
@@ -215,8 +229,6 @@ Features:
 -Give the users some hints when they ask. Allow for little amounts of hints points to use. 
 -Create a Timed Game session where the user has to complete as many hangman slots in a timed setting.
 -Create points for the users
-
-
 **/
 	
 	
