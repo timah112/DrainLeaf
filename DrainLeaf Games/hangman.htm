@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 	<head>	
 		<title>DrainLeaf | Welcome</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name ="description" content="Fun Game allowing user to guess the word letter by letter">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="HandheldFriendly" content="true">
+		 <!-- Bootstrap CSS 
+		 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
+
+		 <meta name ="description" content="Fun Game allowing user to guess the word letter by letter">
 		<meta name="keywords" content="Games, Fun Games, Play, Enjoy, Hangman">
 		<script src="alert/dist/sweetalert-dev.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel = "stylesheet" type ="text/css" href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf\DrainLeaf\DrainLeaf Games\CSS\css_template.css" />	
 		<link rel = "stylesheet" type ="text/css" href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf\DrainLeaf\DrainLeaf Games\CSS\hangman_index_css.css" />	
 		<link rel='icon' href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf\DrainLeaf\DrainLeaf Games\Images\Leaf_Favicon.jpg" type='image/x-icon'/>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-		<script src = "hangman.js"></script>		
+		<script src = "hangman.js"></script>	
+		
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+		
+
 	</head>
 	
 	<body>		
-		<div class="container">
+		<div class="containerMain">
 			
 			<div id = "nav">
 				<ul>
@@ -27,63 +37,64 @@
 				</ul>
 			</div>
 			<div class = "header">
-				<h1  align= "center">Drain Leaf</h1>				
+				<h1 align= "center">Drain Leaf</h1>				
 			</div>			
-			
-			<div id="game">
-				<div id="playBtn">
-					<button id ="increaseDashBtn" type="submit" onClick="onClickOnlyOnce()"> New Game </button>
+			<div class = "container">
+				<div id="game">
+					<div id="playBtn">
+						<button id ="increaseDashBtn" type="submit" onClick="onClickOnlyOnce()"> New Game </button>
+					</div>
+					<br>
+
+					<p id = "categoryTitle" align= "center"></p>
+
+					<p id = "output" align= "center"></p>				
+					<p id = "enterText" align= "center"></p>
+					<br>
+					
+					<form id="textForm" name = "textForm" >
+						<p id= "textBox" name ="fieldName" value="test" input type="text"> </p> 
+						<!--<input-type="text" id= "textBox" name ="fieldName" /> -->
+					</form>
+					
+					<div id="buttonsHolder" align= "center"></div>
+					<div id="name" align= "center"></div>
+					<br>
+
+					<button id="howToBtn" onClick="clickHowTo()"><b>?</b></button>
+					
+					<div id="hintBtn">
+						<button id ="hintButton" type="submit" onClick="checkHint()">Hint </button>
+					</div>
+					<br>
 				</div>
-				<br>
-
-				<p id = "categoryTitle" align= "center"></p>
-
-				<p id = "output" align= "center"></p>				
-				<p id = "enterText" align= "center"></p>
-				<br>
 				
-				<form id="textForm" name = "textForm" >
-					<p id= "textBox" name ="fieldName" value="test" input type="text"> </p> 
-					<!--<input-type="text" id= "textBox" name ="fieldName" /> -->
-				</form>
-				
-				<div id="buttonsHolder" align= "center"></div>
-				<div id="name" align= "center"></div>
-				<br>
+				<div id = "gameSide">
+					<h2 align="center"><U>STATS:</U></h2>
 
-				<button id="howToBtn" onClick="clickHowTo()"><b>?</b></button>
-				
-				<div id="hintBtn">
-					<button id ="hintButton" type="submit" onClick="checkHint()">Hint </button>
-				</div>
-				<br>
-			</div>
-			
-			<div id = "gameSide">
-				<h2 align="center"><U>STATS:</U></h2>
+					<!-- <input id="numOfTries" type="text" name="totalTries" size="5" height="48"><br> -->
+					<div id="label" align="center">
+						<label for="numOfTries" align="center"># of Leaves Remaining: </label>
+					</div>
+					<br>
+					<!-- <textarea readonly id="numOfTriesTextArea" type="text" rows="5", cols="10"></textarea> -->
+					<div id="numOfTriesBox">
+						<p id = "numOfTries" text-align="center"> </p>
+					</div>
 
-				<!-- <input id="numOfTries" type="text" name="totalTries" size="5" height="48"><br> -->
-				<div id="label" align="center">
-					<label for="numOfTries" align="center"># of Leaves Remaining: </label>
-				</div>
-				<br>
-				<!-- <textarea readonly id="numOfTriesTextArea" type="text" rows="5", cols="10"></textarea> -->
-				<div id="numOfTriesBox">
-					<p id = "numOfTries" text-align="center"> </p>
-				</div>
-
-				<br>
-				<hr>
-				<br>
-				<div id="pointsLabel" align="center">
-					<label for="pointsEarned" align="center">Points Earned:</label>
-				</div>
-				<br>
-				<!-- <textarea readonly id="numOfTriesTextArea" type="text" rows="5", cols="10"></textarea> -->
-				<div id="pointsBox">
-					<p id = "pointsValue" text-align="center"> </p>
-				</div>
-			</div>			
+					<br>
+					<hr>
+					<br>
+					<div id="pointsLabel" align="center">
+						<label for="pointsEarned" align="center">Points Earned:</label>
+					</div>
+					<br>
+					<!-- <textarea readonly id="numOfTriesTextArea" type="text" rows="5", cols="10"></textarea> -->
+					<div id="pointsBox">
+						<p id = "pointsValue" text-align="center"> </p>
+					</div>
+				</div>	
+			</div>		
 			<br>
 			<hr>
 			<!--<canvas id = "canvas" width="288" height ="500"> </canvas> -->			
