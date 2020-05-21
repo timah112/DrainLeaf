@@ -12,6 +12,16 @@
 	
 } */
 
+@media screen and (max-width: 400px) {
+  #game { 
+   float: none;
+   margin-right:0;
+   width:auto;
+   border:0;
+   border-bottom:2px solid #000;    
+ }
+}
+
 h1{
   font-family: 'Open Sans', sans-serif;
   font-style: inherit;
@@ -27,14 +37,13 @@ h1{
   text-align: center;
 }
 
-.container {
+.containerMain {
   background-image: url('../Images/green_Leaf.jpg');
 	background-color: #FDFEFE;
 	margin-left: auto;
 	margin-right: auto;
   margin-top: auto;
-	padding: 10px 10px 10px 10px;
-	
+	padding: 10px 10px 300px 10px;	
 }
 
 #game {
@@ -42,7 +51,7 @@ h1{
   background-color:#34495E;
   color: white;
   width: 60%;
-  height: 450px;
+  min-height: 450px;
   display: table-cell;
   float: left;
   margin-right: 5px;
@@ -52,9 +61,11 @@ h1{
   background-color:#34495E;
   color: white;
   display: table-cell;
-  width: 36%;
-  height: 450px;
+  overflow:hidden;
+  width: 35%;
+  min-height: 450px;
   float: right;
+  
   /*margin-right: 50px; 
   margin-left: 5px; */
 
