@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+	<head>
+		<title>Support</title>
+		<link rel = "stylesheet" type ="text/css" href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf Games\CSS\css_template.css" />	
+		<link rel = "stylesheet" type ="text/css" href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf Games\CSS\support.css" />	
+		<link rel='icon' href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf Games\Images\Leaf_Favicon.jpg" type='image/x-icon'/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+	</head>
+	
+	<body>
+		<div id="container">
+			
+			<div id = "nav">
+				<ul>
+					<li>
+						<a href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf Games\hangman.htm#">Play</a>
+						<!--<a href="C:\Users\ATirmizi1\Documents\PERSONAL\DrainLeaf Games\hangman.htm#">Games</a> -->
+						<a href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf Games\Support.htm">Support</a>
+					</li>
+				</ul>
+			</div>
+			
+		<div id = "content">
+			<div id="faq">
+				
+				<h2>F.A.Q:</h2>
+				<button class="accordion">What types of Games will Drainleaf Games feature in the future</button>
+					<div class="panel">
+					  <p>There will eventually be all sorts of games on this website. Ranging from racing, puzzles, to adventurous and action.</p>
+					</div>
+
+					<button class="accordion">Is there a cost for these games?</button>
+					<div class="panel">
+					  <p> As of now, the website is fully free. However, this is due to it being currently in production.</p>
+					</div>
+
+					<button class="accordion">Will I be able to save my points when I restun?</button>
+					<div class="panel">
+					  <p>Currently, your data is only stored by cookies in your browser settings. We dont have a database to store any of your information. Though this is subject to change.</p>
+					</div>
+				
+
+			</div>
+			
+			<script>
+				var acc = document.getElementsByClassName("accordion");
+				var i;
+
+				for (i = 0; i < acc.length; i++) {
+				  acc[i].addEventListener("click", function() {
+					this.classList.toggle("active");
+					var panel = this.nextElementSibling;
+					if (panel.style.display === "block") {
+					  panel.style.display = "none";
+					} else {
+					  panel.style.display = "block";
+					}
+				  });
+				}
+			</script>
+						
+			<hr>
+			
+			
+			<div id= "About">
+				<h2>About Me:</h2>
+				<section>
+					<img src="C:\Users\ATirmizi\Documents\PERSONAL\DrainLeaf Games\Images\Computer Desk Photo.jpg">
+
+				</section>
+				<p>	My name is Atif Tirmizi. I'm a Software Engineer with 3 years of Industry experience. I'm also enrolled in a Master's Program at Lewis University
+				in Computer Science with a concentration in Intelligent Systems. Previously, I completed my Bachelor's Degree in Computer Programming and Information Systems
+				with Concentration in Web Development in Fall 2015. Since graduating, I have worked for companies such as Vanguard and Deloitte as a Software Engineer. </p>
+			</div>
+			<hr>
+			<div id= "Message">
+				<h2>Message:</h2>			
+			
+				<form class="form-style-4" action="mailto:Atirmizi@lewisu.edu" method="post" enctype="text/plain">
+					<label for="field1">
+					<span>Enter Your Name</span><input type="text" name="Your Name" required="true" />
+					</label>
+					<label for="field2">
+					<span>Email Address</span><input type="email" name="Email Address" required="true" />
+					</label>
+					<label for="field3">
+					<span>Short Subject</span><input type="text" name="Subject" required="true" />
+					</label>
+					<label for="field4">
+					<span>Message to Us</span><textarea name="Message" onkeyup="adjust_textarea(this)" required="true"></textarea>
+					</label>
+					<label>
+					<span> </span><input type="submit" name="submit" value="Send Letter" />
+					</label>
+				</form>
+			
+			</div>
+			
+
+			
+			<br>
+			<hr>
+							
+			<div id = "Contact">
+			
+				<h2>Comments, Bug reports, and Feedback</h2>
+				
+				<ul>					
+					<li>Please feel free to email: Atirmizi@lewisu.edu.</li>
+					<li><a href="https://www.codeonetricks.com/">Blog: CodeOneTricks.com</a></li>
+				</ul>
+			</div>
+		
+			
+			<div id = "footer">
+                Copyright &copy; 2018-2019 DrainLeaf&trade; by    Atif Tirmizi
+            </div>
+			
+			
+		</div>
+	
+	</body>
+
+
+</html>
