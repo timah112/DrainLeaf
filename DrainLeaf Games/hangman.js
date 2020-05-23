@@ -3,10 +3,13 @@
 /** set a variable to pick directly from a fruit. */
 var fruitSelection = ["APPLE","ORANGE", "BANANA", "PEAR", "WATERMELON", "KIWI", "LEMON", "PINEAPPLE", "STRAWBERRY", "POMEGRANATE", "GRAPEFRUIT", "BLUEBERRY", "COCONUT", "CHERRY", "PEACH", "BLACKBERRY", "MANGO", "CRANBERRY", "PLUMS", "SUGARCANE"];
 var mammalSelection = ["CAT", "DOG", "ELEPHANT", "BEAR", "LION", "TIGER", "LIGER", "MONKEY", "APE", "GORILLA", "SNAKE", "MONGOOSE", "DEER", "RHINOCERAS", "ARMADILLO", "HYENA", "HORSE", "KANGAROO", "GIRAFFE", "SKUNK","PIG", "GOAT", "LAMB", "COW", "WARTHOG", "MOOSE", "BULL"];
-//Pick a fruit randomly from the array
-var selectedRandomFruit = fruitSelection[Math.floor(Math.random()*fruitSelection.length)];
-//Get the length of that chosen fruit .
-var fruitLength = selectedRandomFruit.length;
+var countries = ["PAKISTAN", "BANGLADESH", "CANADA", "AUSTRALIA", "SINGAPORE", "JAPAN", "GERMANY", "CHINA", "TURKEY", "SWEDEN", "NEW ZEALAND", "CUBA", "BRAZIL", "MEXICO", "FRANCE", "INDIA", "SPAIN", "COLOMBIA", "COSTA RICA", "BEHRAIN", "ARGENTINA", "AFGHANISTAN", "UAE", "AZERBAIJAN", "ECUADOR", "ALGERIA", "BURMA", "EGYPT", "LIBYA", "LEBANON", "SAUDI ARABIA", "IRELAND", "IRAQ", "IRAN", "ITALY", "INDONESIA", "YEMEN", "SRI LANKA", "PERU", "CHILE", "KUWAIT", "MOROCCO", "ROMANIA", "MALDIVES ISLANDS", "PANAMA", "KENYA", "CZECHIA", "JORDAN"];
+var countryCapitals = ["PARIS", "BERLIN", "BRUSSELS", "CAIRO", "AMMAN", "LEBANON", "JERUSALEM", "BEIRUT"];
+
+var categorySelection = ["Fruits", "Mammals", "Countries", "CountryCapitals"];
+
+var selectRandomCategory = categorySelection[Math.floor(Math.random()*categorySelection.length)];
+var categoryLength;
 //Counter variable used to get the counter each time the addFields Function is called.
 var addFieldCounter =0;
 //variable for the 'Input Field' Object:
@@ -26,6 +29,25 @@ var totalPoints = 0;
 var pointsEarned = 5;
 var finalTotalPoints;
 
+var actualSelectionArray= [];
+var selectedRandomElement;
+function selectCategory(){
+	
+	if(selectRandomCategory === "Fruits")actualSelectionArray =  fruitSelection.slice();
+	if(selectRandomCategory === "Mammals") actualSelectionArray =  mammalSelection.slice();
+	if(selectRandomCategory === "Countries") actualSelectionArray =  countries.slice();
+	if(selectRandomCategory === "CountryCapitals") actualSelectionArray =  countryCapitals.slice();
+
+	//Pick a element randomly from the selected array
+	selectedRandomElement = actualSelectionArray[Math.floor(Math.random()*actualSelectionArray.length)];
+	//Get the length of that chosen Element .
+	categoryLength = selectedRandomElement.length;
+	return  selectedRandomElement;
+}
+
+
+
+
 //----------------------------------------------
 /**
  * It runs on the "load" of this page.
@@ -33,9 +55,10 @@ var finalTotalPoints;
  * It also initializes the "letter variable".
  */
 var onLoadFuction= window.addEventListener( "load", function( windowLoadE ) {
+	selectCategory();
 	document.getElementById("numOfTries").innerHTML = numOfTries;
-	if(fruitLength >5){
-		numOfHints = Math.abs(fruitLength / 2 -2);
+	if(categoryLength >5){
+		numOfHints = Math.abs(categoryLength / 2 -2);
 		document.getElementById("pointsValue").innerHTML = Math.round(numOfHints);
 	}else{
 		document.getElementById("pointsValue").innerHTML = Math.round(numOfHints);
@@ -43,6 +66,7 @@ var onLoadFuction= window.addEventListener( "load", function( windowLoadE ) {
 	addFields();
 	setInterval(makeAlert, 500);
 });
+
 
 
 /**
@@ -73,10 +97,10 @@ function addFields(){
 		
 		//fruitLengthSentence.appendChild(text);
 
-		document.getElementById("categoryTitle").innerHTML = "The Category is: Fruits" ;
+		document.getElementById("categoryTitle").innerHTML = "The Category is: " + selectRandomCategory;
 		document.getElementById("categoryTitle").style.fontSize = "large";
 
-		document.getElementById("output").innerHTML = "The Length of the category is: " + fruitLength;
+		document.getElementById("output").innerHTML = "The Length of the category is: " + categoryLength;
 		document.getElementById("output").style.fontSize = "large";
 
 		//document.getElementById("enterText").innerHTML = "Please select letters from the keys below:";
@@ -85,7 +109,7 @@ function addFields(){
 		displayFields();
 		var str = [];
 		var x;
-		for(var i = 0; i<fruitLength; i++){
+		for(var i = 0; i<categoryLength; i++){
 			//str.push(dash);
 			//str.push(document.createElement("INPUT"));
 			inputField[i] = document.createElement("INPUT");
@@ -131,23 +155,23 @@ function setLetter( letter ) {
 		onClickOnlyOnce();
 	}
 	else if(isTimeOut){
-		swal("Sorry, you are out of Time. The correct word was: " + selectedRandomFruit + "\n  \n \Click 'New Game' to continue");	
+		swal("Sorry, you are out of Time. The correct word was: " + selectedRandomElement + "\n  \n \Click 'New Game' to continue");	
 	}
 	else if(chosenLetterFromKeys.includes(letter)){
 		swal("You already selected that letter. Please select another letter.");
 	}
 	else if(numOfTries > -1){
 		chosenLetterFromKeys.push(letter);
-		findIndex(letter, selectedRandomFruit);
+		findIndex(letter, selectedRandomElement);
 	} 
 	else{
-		swal("Sorry, you are out of tries. The correct word was: " + selectedRandomFruit + "\n  \n \Click 'New Game' to continue");		
+		swal("Sorry, you are out of tries. The correct word was: " + selectedRandomElement + "\n  \n \Click 'New Game' to continue");		
 	}	
 }
 
 /**-----------------------------------------------------------------------
 function enterIntoField(inputField, letter){
-	//var letterIndex = findIndex(letter, selectedRandomFruit);
+	//var letterIndex = findIndex(letter, selectedRandomWord);
 	
 	if(indexCounter != 0){
 		//document.forms[0].elements[0].innerHTML = letter;
@@ -163,11 +187,11 @@ it gets its index and inserts that letter into that field index.
 **/
 var index = [];
 var isWordFound = false;
-function findIndex(letter, selectedRandomFruit){
+function findIndex(letter, selectedRandomWord){
 	
 	var isLetterFound = false;
-	for (var i =0; i < fruitLength; i++){
-		if (selectedRandomFruit.charAt(i) == letter){
+	for (var i =0; i < categoryLength; i++){
+		if (selectedRandomWord.charAt(i) == letter){
 			correctGuessCounter++;
 			index[i] = i;
 			isLetterFound = true;
@@ -179,7 +203,7 @@ function findIndex(letter, selectedRandomFruit){
 		numOfTries--;
 		selectedLetters.push(letter);
 
-	}else if(correctGuessCounter >= fruitLength){
+	}else if(correctGuessCounter >= categoryLength){
 		totalPoints += pointsEarned;
 		//sessionStorage.setItem("totalPoints", totalPoints);
 		//finalTotalPoints = sessionStorage.getItem("totalPoints");
@@ -200,11 +224,11 @@ function checkHint(){
 	//Loop through the selected Word.
 	//Any letter that is not previously selected, give a letter hint to the user.
 	if(numOfHints > 0){
-		for (var i =0; i < fruitLength; i++){
-			if(!chosenLetterFromKeys.includes(selectedRandomFruit.charAt(i)) && (!hintsIndex.includes(i))){
-				selectedLetters.push(selectedRandomFruit.charAt(i));
+		for (var i =0; i < categoryLength; i++){
+			if(!chosenLetterFromKeys.includes(selectedRandomElement.charAt(i)) && (!hintsIndex.includes(i))){
+				selectedLetters.push(selectedRandomElement.charAt(i));
 				hintsIndex.push(i);
-				inputField[i].value = selectedRandomFruit.charAt(i);
+				inputField[i].value = selectedRandomElement.charAt(i);
 				correctGuessCounter++;
 				numOfHints--;
 				document.getElementById("pointsValue").innerHTML = Math.round(numOfHints);
@@ -212,11 +236,11 @@ function checkHint(){
 			}
 		}		
 	}
-	if(correctGuessCounter >= fruitLength){
+	if(correctGuessCounter >= categoryLength){
 		document.getElementById("pointsValue").innerHTML = numOfHints;
 		isWordFound = true;
 		swal("CONGRATS!", ", You got the right word!", "success");
-	}	
+	}
 }
 
 /**
