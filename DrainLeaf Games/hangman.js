@@ -3,10 +3,13 @@
 /** set a variable to pick directly from a fruit. */
 var fruitSelection = ["APPLE","ORANGE", "BANANA", "PEAR", "WATERMELON", "KIWI", "LEMON", "PINEAPPLE", "STRAWBERRY", "POMEGRANATE", "GRAPEFRUIT", "BLUEBERRY", "COCONUT", "CHERRY", "PEACH", "BLACKBERRY", "MANGO", "CRANBERRY", "PLUMS", "SUGARCANE"];
 var mammalSelection = ["CAT", "DOG", "ELEPHANT", "BEAR", "LION", "TIGER", "LIGER", "MONKEY", "APE", "GORILLA", "SNAKE", "MONGOOSE", "DEER", "RHINOCERAS", "ARMADILLO", "HYENA", "HORSE", "KANGAROO", "GIRAFFE", "SKUNK","PIG", "GOAT", "LAMB", "COW", "WARTHOG", "MOOSE", "BULL"];
-//Pick a fruit randomly from the array
-var selectedRandomFruit = fruitSelection[Math.floor(Math.random()*fruitSelection.length)];
-//Get the length of that chosen fruit .
-var fruitLength = selectedRandomFruit.length;
+var countries = ["PAKISTAN", "BANGLADESH", "CANADA", "AUSTRALIA", "SINGAPORE", "JAPAN", "GERMANY", "CHINA", "TURKEY", "SWEDEN", "NEW ZEALAND", "CUBA", "BRAZIL", "MEXICO", "FRANCE", "INDIA", "SPAIN", "COLOMBIA", "COSTA RICA", "BEHRAIN", "ARGENTINA", "AFGHANISTAN", "UAE", "AZERBAIJAN", "ECUADOR", "ALGERIA", "BURMA", "EGYPT", "LIBYA", "LEBANON", "SAUDI ARABIA", "IRELAND", "IRAQ", "IRAN", "ITALY", "INDONESIA", "YEMEN", "SRI LANKA", "PERU", "CHILE", "KUWAIT", "MOROCCO", "ROMANIA", "MALDIVES ISLANDS", "PANAMA", "KENYA", "CZECHIA", "JORDAN"];
+var countryCapitals = ["PARIS", "BERLIN", "BRUSSELS", "CAIRO", "AMMAN", "LEBANON", "JERUSALEM", "BEIRUT"];
+
+var categorySelection = ["Fruits", "Mammals", "Countries", "CountryCapitals"];
+
+var selectRandomCategory = categorySelection[Math.floor(Math.random()*categorySelection.length)];
+var categoryLength;
 //Counter variable used to get the counter each time the addFields Function is called.
 var addFieldCounter =0;
 //variable for the 'Input Field' Object:
@@ -19,10 +22,30 @@ var numOfTries = 6;
 //variable to count each time the user corrects properly
 var correctGuessCounter = 0;
 
+var numOfHints = 2;
+
 //Points Variables: 
 var totalPoints = 0;
 var pointsEarned = 5;
 var finalTotalPoints;
+
+var actualSelectionArray= [];
+var selectedRandomElement;
+function selectCategory(){
+	
+	if(selectRandomCategory === "Fruits")actualSelectionArray =  fruitSelection.slice();
+	if(selectRandomCategory === "Mammals") actualSelectionArray =  mammalSelection.slice();
+	if(selectRandomCategory === "Countries") actualSelectionArray =  countries.slice();
+	if(selectRandomCategory === "CountryCapitals") actualSelectionArray =  countryCapitals.slice();
+
+	//Pick a element randomly from the selected array
+	selectedRandomElement = actualSelectionArray[Math.floor(Math.random()*actualSelectionArray.length)];
+	//Get the length of that chosen Element .
+	categoryLength = selectedRandomElement.length;
+	return  selectedRandomElement;
+}
+
+
 
 
 //----------------------------------------------
@@ -32,27 +55,38 @@ var finalTotalPoints;
  * It also initializes the "letter variable".
  */
 var onLoadFuction= window.addEventListener( "load", function( windowLoadE ) {
-	
+	selectCategory();
+	document.getElementById("numOfTries").innerHTML = numOfTries;
+	if(categoryLength >5){
+		numOfHints = Math.abs(categoryLength / 2 -2);
+		document.getElementById("pointsValue").innerHTML = Math.round(numOfHints);
+	}else{
+		document.getElementById("pointsValue").innerHTML = Math.round(numOfHints);
+	}	
 	addFields();
+	setInterval(makeAlert, 500);
 });
+
 
 
 /**
 This function checks if the counter for a field thats clicked is more than once, and if so if wont call the addField Method. 
-(Basically prevents the user from multiple button clicks)
+(Basically prevents the user from multiple button clicks and prevents the added letter fields on top of each other)
 **/	
 function onClickOnlyOnce(){
 	if (addFieldCounter < 1){
-		document.getElementById("pointsValue").innerHTML = this.totalPoints;
+		//document.getElementById("pointsValue").innerHTML = totalPoints;
+		document.getElementById("pointsValue").innerHTML =Math.round(numOfHints);
 		addFields();
 	}else{
-		//var addFieldsFunc = new addFields();
+		//var addFieldsFunc = new addFields();		
 		location.reload();
 	}
 }
 
 /**
 This function is called as a closure inside the onClickMore
+It creates the input fields in the webpage depending on the length of the fruit:
 */			
 function addFields(){
 	addFieldCounter++;
@@ -63,10 +97,10 @@ function addFields(){
 		
 		//fruitLengthSentence.appendChild(text);
 
-		document.getElementById("categoryTitle").innerHTML = "The Category is: Fruits" ;
+		document.getElementById("categoryTitle").innerHTML = "The Category is: " + selectRandomCategory;
 		document.getElementById("categoryTitle").style.fontSize = "large";
 
-		document.getElementById("output").innerHTML = "The Length of the category is: " + fruitLength;
+		document.getElementById("output").innerHTML = "The Length of the category is: " + categoryLength;
 		document.getElementById("output").style.fontSize = "large";
 
 		//document.getElementById("enterText").innerHTML = "Please select letters from the keys below:";
@@ -75,22 +109,19 @@ function addFields(){
 		displayFields();
 		var str = [];
 		var x;
-		for(var i = 0; i<fruitLength; i++ ){
+		for(var i = 0; i<categoryLength; i++){
 			//str.push(dash);
 			//str.push(document.createElement("INPUT"));
 			inputField[i] = document.createElement("INPUT");
 			var x = document.getElementById("textBox").appendChild(inputField[i]).size = "5"; //set the physical size of each field
 			document.getElementById("textBox").appendChild(inputField[i]).readOnly= true; // make the field boxes read-only
-
 		}	
-	
 }
 
 /**
  * API Function to Physically Display the Letter Keyboard on the Screen:
  */
 function displayFields(){
-
 	var p, button, holder;
     holder = document.getElementById( "buttonsHolder" );
     for ( var i = 65; i <= 90; i++ ) {
@@ -98,7 +129,7 @@ function displayFields(){
             p = document.createElement( "p" );
         }
         letter = String.fromCharCode( i );
-        button = document.createElement( "button" );
+        button = document.createElement("button");
         button.innerHTML = letter;
         button.setAttribute( "data-letter", letter );
         button.onclick = function( e ) { setLetter( this.getAttribute( "data-letter" ) ); };
@@ -107,29 +138,40 @@ function displayFields(){
             holder.appendChild( p );
         }
     }
-
 }
 
 /**
  * @param {*} letter 
- * This function adds all the used letters to the botton of the keyboard. Its called eventListener function above.
+ * This function adds all the used letters to the bottom of the keyboard. Its called eventListener function above.
  * It runs each time a letter is clicked on in the keyboard
  * If the num of wrong tries is greater than 0, it will show an alert.
  */
+var chosenLetterFromKeys = [];
 function setLetter( letter ) {
     var div = document.getElementById( "name" );
-    div.innerHTML = div.innerHTML + letter;
-	if(numOfTries > -1){
-		findIndex(letter, selectedRandomFruit);
-	}else{
-		swal("Sorry, you are out of tries. The correct word was: " + selectedRandomFruit + "\n  \n \Click 'New Game' to continue");
-		
+	div.innerHTML = div.innerHTML + letter;
+	//chosenLetterFromKeys.push(letter);
+	if(isWordFound){
+		onClickOnlyOnce();
+	}
+	else if(isTimeOut){
+		swal("Sorry, you are out of Time. The correct word was: " + selectedRandomElement + "\n  \n \Click 'New Game' to continue");	
+	}
+	else if(chosenLetterFromKeys.includes(letter)){
+		swal("You already selected that letter. Please select another letter.");
+	}
+	else if(numOfTries > -1){
+		chosenLetterFromKeys.push(letter);
+		findIndex(letter, selectedRandomElement);
+	} 
+	else{
+		swal("Sorry, you are out of tries. The correct word was: " + selectedRandomElement + "\n  \n \Click 'New Game' to continue");		
 	}	
 }
 
 /**-----------------------------------------------------------------------
 function enterIntoField(inputField, letter){
-	//var letterIndex = findIndex(letter, selectedRandomFruit);
+	//var letterIndex = findIndex(letter, selectedRandomWord);
 	
 	if(indexCounter != 0){
 		//document.forms[0].elements[0].innerHTML = letter;
@@ -143,33 +185,30 @@ function enterIntoField(inputField, letter){
 Function that compares the current letter with the fruit variable. If the Fruit String contains that letter,
 it gets its index and inserts that letter into that field index.
 **/
-
-function findIndex(letter, selectedRandomFruit){
-	var index = [];
+var index = [];
+var isWordFound = false;
+function findIndex(letter, selectedRandomWord){
 	
-	var isFound = false;
-	for (var i =0; i < fruitLength; i++){
-		if (selectedRandomFruit.charAt(i) == letter){
+	var isLetterFound = false;
+	for (var i =0; i < categoryLength; i++){
+		if (selectedRandomWord.charAt(i) == letter){
 			correctGuessCounter++;
 			index[i] = i;
-			isFound = true;
-			inputField[i].value = letter; //this is initializing the inputField Object to its proper value at the proper index.
-			selectedLetters.push(letter);
+			isLetterFound = true;
+			inputField[i].value = letter; //this is initializing the inputField Object to its proper value at the proper index.	
 		}
 	}
-	if(!isFound){
+	if(!isLetterFound){
 		document.getElementById("numOfTries").innerHTML = numOfTries;
 		numOfTries--;
 		selectedLetters.push(letter);
 
-	}else if(correctGuessCounter === fruitLength){
-		totalPoints+= pointsEarned;
-		sessionStorage.setItem("totalPoints", totalPoints);
-		finalTotalPoints = sessionStorage.getItem("totalPoints");
-		
-		document.getElementById("pointsValue").innerHTML = finalTotalPoints;
-		
-		/** alert("CONGRATS! You got the right word")**/
+	}else if(correctGuessCounter >= categoryLength){
+		totalPoints += pointsEarned;
+		//sessionStorage.setItem("totalPoints", totalPoints);
+		//finalTotalPoints = sessionStorage.getItem("totalPoints");
+		//document.getElementById("pointsValue").innerHTML = numOfHints;
+		isWordFound = true;
 		swal("CONGRATS!", ", You got the right word!", "success");
 	}
 	return index;
@@ -177,20 +216,60 @@ function findIndex(letter, selectedRandomFruit){
 
 //How-To Button Feature:
 function clickHowTo(){
-	swal("RULES: \n \n Enter the letters from the displayed keyboard on screen. \n \nTo win, guess the proper letters before running out of tries");
-	
+	swal("RULES: \n \n Enter the letters from the displayed keyboard on screen. \n \nTo win, guess the proper letters before running out of tries");	
 }
 
+var hintsIndex = [];
 function checkHint(){
-	//loop through the selected Word.
+	//Loop through the selected Word.
 	//Any letter that is not previously selected, give a letter hint to the user.
-	for (var i =0; i < fruitLength; i++){
-		if(!selectedLetters.includes(selectedRandomFruit.charAt(i))){
-			inputField[i].value = selectedRandomFruit.charAt(i)
-			break;
-		}
+	if(numOfHints > 0){
+		for (var i =0; i < categoryLength; i++){
+			if(!chosenLetterFromKeys.includes(selectedRandomElement.charAt(i)) && (!hintsIndex.includes(i))){
+				selectedLetters.push(selectedRandomElement.charAt(i));
+				hintsIndex.push(i);
+				inputField[i].value = selectedRandomElement.charAt(i);
+				correctGuessCounter++;
+				numOfHints--;
+				document.getElementById("pointsValue").innerHTML = Math.round(numOfHints);
+				break;
+			}
+		}		
+	}
+	if(correctGuessCounter >= categoryLength){
+		document.getElementById("pointsValue").innerHTML = numOfHints;
+		isWordFound = true;
+		swal("CONGRATS!", ", You got the right word!", "success");
 	}
 }
+
+/**
+ * Below are the 2 functions to check the timer and whether the user is allowed to try again: 
+ */
+var isTimeOut = false;
+var timeleft = 60;
+var downloadTimer = setInterval(function(){
+  if(timeleft < 0){	
+	clearInterval(downloadTimer);
+	document.getElementById("countdown").innerHTML = "Time Finished.";
+	isTimeOut = true;
+  }else if(isWordFound){
+	document.getElementById("countdown").innerHTML = "Good Job!";
+  } 
+  else {
+    document.getElementById("countdown").innerHTML = timeleft + " SECONDS REMAINING";
+  }
+  timeleft -= 1;
+}, 1000);
+
+//This function is used to delay the time before next line execution. EX: wait(5000) means 5 seconds
+function wait(ms){
+	var start = new Date().getTime();
+	var end = start;
+	while(end < start + ms) {
+	  end = new Date().getTime();
+    }
+ }
 
 //This function runs each time after a word is selected if the correct word is guessed.
 function reconfirmEachLetter(){
@@ -215,8 +294,6 @@ Features:
 -Give the users some hints when they ask. Allow for little amounts of hints points to use. 
 -Create a Timed Game session where the user has to complete as many hangman slots in a timed setting.
 -Create points for the users
-
-
 **/
 	
 	
