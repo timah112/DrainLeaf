@@ -4,7 +4,7 @@
 var fruitSelection = ["APPLE","ORANGE", "BANANA", "PEAR", "WATERMELON", "KIWI", "LEMON", "PINEAPPLE", "STRAWBERRY", "POMEGRANATE", "GRAPEFRUIT", "BLUEBERRY", "COCONUT", "CHERRY", "PEACH", "BLACKBERRY", "MANGO", "CRANBERRY", "PLUMS", "SUGARCANE"];
 var mammalSelection = ["CAT", "DOG", "ELEPHANT", "BEAR", "LION", "TIGER", "LIGER", "MONKEY", "APE", "GORILLA", "SNAKE", "MONGOOSE", "DEER", "RHINOCERAS", "ARMADILLO", "HYENA", "HORSE", "KANGAROO", "GIRAFFE", "SKUNK","PIG", "GOAT", "LAMB", "COW", "WARTHOG", "MOOSE", "BULL"];
 var countries = ["PAKISTAN", "BANGLADESH", "CANADA", "AUSTRALIA", "SINGAPORE", "JAPAN", "GERMANY", "CHINA", "TURKEY", "SWEDEN", "NEW ZEALAND", "CUBA", "BRAZIL", "MEXICO", "FRANCE", "INDIA", "SPAIN", "COLOMBIA", "COSTA RICA", "BEHRAIN", "ARGENTINA", "AFGHANISTAN", "UAE", "AZERBAIJAN", "ECUADOR", "ALGERIA", "BURMA", "EGYPT", "LIBYA", "LEBANON", "SAUDIARABIA", "IRELAND", "IRAQ", "IRAN", "ITALY", "INDONESIA", "YEMEN", "SRILANKA", "PERU", "CHILE", "KUWAIT", "MOROCCO", "ROMANIA", "MALDIVES ISLANDS", "PANAMA", "KENYA", "CZECHIA", "JORDAN"];
-var countryCapitals = ["PARIS", "BERLIN", "BRUSSELS", "CAIRO", "AMMAN", "LEBANON", "JERUSALEM", "BEIRUT"];
+var countryCapitals = ["PARIS", "BERLIN", "BRUSSELS", "CAIRO", "AMMAN", "JERUSALEM", "BEIRUT"];
 
 var categorySelection = ["Fruits", "Mammals", "Countries", "CountryCapitals"];
 
@@ -161,6 +161,8 @@ function setLetter( letter ) {
 		onClickOnlyOnce();
 	}
 	else if(isTimeOut){
+		totalPoints = 0;
+		localStorage.setItem("totalPoints",totalPoints);
 		swal("Sorry, you are out of Time. The correct word was: " + selectedRandomElement + "\n  \n \Click 'New Game' to continue");	
 	}
 	else if(chosenLetterFromKeys.includes(letter)){
@@ -171,6 +173,8 @@ function setLetter( letter ) {
 		findIndex(letter, selectedRandomElement);
 	} 
 	else{
+		totalPoints = 0;
+		localStorage.setItem("totalPoints",totalPoints);
 		swal("Sorry, you are out of tries. The correct word was: " + selectedRandomElement + "\n  \n \Click 'New Game' to continue");		
 	}	
 }
@@ -241,7 +245,7 @@ function checkHint(){
 				inputField[i].value = selectedRandomElement.charAt(i);
 				correctGuessCounter++;
 				numOfHints--;
-				document.getElementById("pointsValue").innerHTML = Math.round(numOfHints);
+				document.getElementById("HintsValue").innerHTML = Math.round(numOfHints);
 				break;
 			}
 		}		
