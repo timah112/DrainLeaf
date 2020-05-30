@@ -3,7 +3,7 @@
 /** set a variable to pick directly from a fruit. */
 var fruitSelection = ["APPLE","ORANGE", "BANANA", "PEAR", "WATERMELON", "KIWI", "LEMON", "PINEAPPLE", "STRAWBERRY", "POMEGRANATE", "GRAPEFRUIT", "BLUEBERRY", "COCONUT", "CHERRY", "PEACH", "BLACKBERRY", "MANGO", "CRANBERRY", "PLUMS", "SUGARCANE"];
 var mammalSelection = ["CAT", "DOG", "ELEPHANT", "BEAR", "LION", "TIGER", "LIGER", "MONKEY", "APE", "GORILLA", "SNAKE", "MONGOOSE", "DEER", "RHINOCERAS", "ARMADILLO", "HYENA", "HORSE", "KANGAROO", "GIRAFFE", "SKUNK","PIG", "GOAT", "LAMB", "COW", "WARTHOG", "MOOSE", "BULL"];
-var countries = ["PAKISTAN", "BANGLADESH", "CANADA", "AUSTRALIA", "SINGAPORE", "JAPAN", "GERMANY", "CHINA", "TURKEY", "SWEDEN", "NEW ZEALAND", "CUBA", "BRAZIL", "MEXICO", "FRANCE", "INDIA", "SPAIN", "COLOMBIA", "COSTA RICA", "BEHRAIN", "ARGENTINA", "AFGHANISTAN", "UAE", "AZERBAIJAN", "ECUADOR", "ALGERIA", "BURMA", "EGYPT", "LIBYA", "LEBANON", "SAUDI ARABIA", "IRELAND", "IRAQ", "IRAN", "ITALY", "INDONESIA", "YEMEN", "SRI LANKA", "PERU", "CHILE", "KUWAIT", "MOROCCO", "ROMANIA", "MALDIVES ISLANDS", "PANAMA", "KENYA", "CZECHIA", "JORDAN"];
+var countries = ["PAKISTAN", "BANGLADESH", "CANADA", "AUSTRALIA", "SINGAPORE", "JAPAN", "GERMANY", "CHINA", "TURKEY", "SWEDEN", "NEW ZEALAND", "CUBA", "BRAZIL", "MEXICO", "FRANCE", "INDIA", "SPAIN", "COLOMBIA", "COSTA RICA", "BEHRAIN", "ARGENTINA", "AFGHANISTAN", "UAE", "AZERBAIJAN", "ECUADOR", "ALGERIA", "BURMA", "EGYPT", "LIBYA", "LEBANON", "SAUDIARABIA", "IRELAND", "IRAQ", "IRAN", "ITALY", "INDONESIA", "YEMEN", "SRILANKA", "PERU", "CHILE", "KUWAIT", "MOROCCO", "ROMANIA", "MALDIVES ISLANDS", "PANAMA", "KENYA", "CZECHIA", "JORDAN"];
 var countryCapitals = ["PARIS", "BERLIN", "BRUSSELS", "CAIRO", "AMMAN", "LEBANON", "JERUSALEM", "BEIRUT"];
 
 var categorySelection = ["Fruits", "Mammals", "Countries", "CountryCapitals"];
@@ -11,7 +11,7 @@ var categorySelection = ["Fruits", "Mammals", "Countries", "CountryCapitals"];
 var selectRandomCategory = categorySelection[Math.floor(Math.random()*categorySelection.length)];
 var categoryLength;
 //Counter variable used to get the counter each time the addFields Function is called.
-var addFieldCounter =0;
+var addFieldCounter =0; 
 //variable for the 'Input Field' Object:
 var inputField = [];
 //Variable to hold the current letter
@@ -23,14 +23,22 @@ var numOfTries = 6;
 var correctGuessCounter = 0;
 
 var numOfHints = 2;
-
+var tempNum = localStorage.getItem("totalPoints");
+let totalPoints;
 //Points Variables: 
-var totalPoints = 0;
+if(Number.isNaN(tempNum) || isNaN(tempNum) || tempNum === null){
+	totalPoints = 0;
+}else{
+	totalPoints = parseFloat(localStorage.getItem("totalPoints"));
+}
+
+
 var pointsEarned = 5;
 var finalTotalPoints;
 
 var actualSelectionArray= [];
 var selectedRandomElement;
+
 function selectCategory(){
 	
 	if(selectRandomCategory === "Fruits")actualSelectionArray =  fruitSelection.slice();
@@ -45,9 +53,6 @@ function selectCategory(){
 	return  selectedRandomElement;
 }
 
-
-
-
 //----------------------------------------------
 /**
  * It runs on the "load" of this page.
@@ -57,11 +62,12 @@ function selectCategory(){
 var onLoadFuction= window.addEventListener( "load", function( windowLoadE ) {
 	selectCategory();
 	document.getElementById("numOfTries").innerHTML = numOfTries;
+	document.getElementById("pointsValue").innerHTML = Math.round(totalPoints);
 	if(categoryLength >5){
 		numOfHints = Math.abs(categoryLength / 2 -2);
-		document.getElementById("pointsValue").innerHTML = Math.round(numOfHints);
+		document.getElementById("HintsValue").innerHTML = Math.round(numOfHints);
 	}else{
-		document.getElementById("pointsValue").innerHTML = Math.round(numOfHints);
+		document.getElementById("HintsValue").innerHTML = Math.round(numOfHints);
 	}	
 	addFields();
 	setInterval(makeAlert, 500);
@@ -205,6 +211,10 @@ function findIndex(letter, selectedRandomWord){
 
 	}else if(correctGuessCounter >= categoryLength){
 		totalPoints += pointsEarned;
+		localStorage.setItem("totalPoints",totalPoints);
+		
+		//alert(JSON.parse( localStorage.getItem("totalPoints")));
+		document.getElementById("pointsValue").innerHTML = JSON.parse( localStorage.getItem("totalPoints"));
 		//sessionStorage.setItem("totalPoints", totalPoints);
 		//finalTotalPoints = sessionStorage.getItem("totalPoints");
 		//document.getElementById("pointsValue").innerHTML = numOfHints;
