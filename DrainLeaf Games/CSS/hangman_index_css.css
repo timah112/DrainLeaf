@@ -43,7 +43,7 @@ h1{
 	margin-left: auto;
 	margin-right: auto;
   margin-top: auto;
-	padding: 10px 10px 300px 10px;	
+	padding: 10px 10px 400px 10px;	
 }
 
 #game {
@@ -55,6 +55,7 @@ h1{
   display: table-cell;
   float: left;
   margin-right: 5px;
+  margin-bottom: 50px;
 }
 #gameSide{
   border: 3px solid black;
@@ -65,6 +66,8 @@ h1{
   width: 35%;
   min-height: 450px;
   float: right;
+  padding: 10px 10px 20px 20px;
+  margin-bottom: 50px;
   
   /*margin-right: 50px; 
   margin-left: 5px; */
@@ -92,7 +95,7 @@ label {
 
   }
 
-  #pointsBox{
+  #pointsBox, #HintsBox{
     border: 2px solid black;
     border-radius: 25%;
     background-color:white;
@@ -105,7 +108,7 @@ label {
     text-align: "center";
     
   }
-  #pointsValue{
+  #pointsValue, #HintsValue{
     font-size: 30px;
     text-align: "center";
   }

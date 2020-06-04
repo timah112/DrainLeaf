@@ -4,11 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "file:///C:/Users/Atirmizi/OneDrive%20-%20EHE/PERSONAL/PERSONAL/DrainLeaf/DrainLeaf/DrainLeaf%20Games/hangman.htm#",
+            //"url": "file:///C:/Users/Atirmizi/OneDrive%20-%20EHE/PERSONAL/PERSONAL/DrainLeaf/DrainLeaf/DrainLeaf%20Games/hangman.htm#",
+            "url": "http://localhost:8080/DrainLeaf GAMES/hangman.htm",
             "webRoot": "${workspaceFolder}/DRAINLEAF GAMES/hangman.htm"
         }
     ]

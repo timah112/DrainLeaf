@@ -11,9 +11,9 @@
 		<meta name="keywords" content="Games, Fun Games, Play, Enjoy, Hangman">
 		<script src="alert/dist/sweetalert-dev.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<link rel = "stylesheet" type ="text/css" href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf\DrainLeaf\DrainLeaf Games\CSS\css_template.css" />	
-		<link rel = "stylesheet" type ="text/css" href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf\DrainLeaf\DrainLeaf Games\CSS\hangman_index_css.css" />	
-		<link rel='icon' href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf\DrainLeaf\DrainLeaf Games\Images\Leaf_Favicon.jpg" type='image/x-icon'/>
+		<link rel = "stylesheet" type ="text/css" href="http://localhost:8080/DrainLeaf GAMES/CSS/css_template.css" />	
+		<link rel = "stylesheet" type ="text/css" href="http://localhost:8080/DrainLeaf GAMES/CSS/hangman_index_css.css" />	
+		<link rel='icon' href="http://localhost:8080/DrainLeaf GAMES/Images/Leaf_Favicon.jpg" type='image/x-icon'/>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 		<script src = "hangman.js"></script>	
 		
@@ -30,14 +30,14 @@
 			<div id = "nav">
 				<ul>
 					<li>
-						<a href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf\DrainLeaf\DrainLeaf Games\hangman.htm#">Play</a>
+						<a href="http://localhost:8080/DrainLeaf GAMES/hangman.htm#">Play</a>
 						<!--<a href="C:\Users\ATirmizi1\Documents\PERSONAL\DrainLeaf Games\hangman.htm#">Games</a> -->
-						<a href="C:\Users\Atirmizi\OneDrive - EHE\PERSONAL\PERSONAL\DrainLeaf\DrainLeaf\DrainLeaf Games\Support.htm">Support</a>
+						<a href="http://localhost:8080/DrainLeaf GAMES/Support.htm">Support</a>
 					</li>
 				</ul>
 			</div>
 			<div class = "header">
-				<h1 align= "center">Drain Leaf</h1>				
+				<h1 align= "center">Drain LEAF</h1>				
 			</div>			
 			<div class = "container">
 				<div id="game">
@@ -58,7 +58,7 @@
 						<p id= "textBox" name ="fieldName" value="test" input type="text"> </p> 
 						<!--<input-type="text" id= "textBox" name ="fieldName" /> -->
 					</form>
-					
+					<br>
 					<div id="buttonsHolder" align="center"></div>
 					<div id="name" align="center"></div>
 					<br>
@@ -72,29 +72,40 @@
 				</div>
 				
 				<div id = "gameSide">
-					<h2 align="center"><U>STATS:</U></h2>
+					<!-- <h2 align="center"><U>STATS:</U></h2> -->
 
 					<!-- <input id="numOfTries" type="text" name="totalTries" size="5" height="48"><br> -->
 					<div id="label" align="center">
-						<label for="numOfTries" align="center"># of Leaves Remaining: </label>
+						<label for="numOfTries" align="center">Number of Leaves Remaining: </label>
 					</div>
-					<br>
+					
 					<!-- <textarea readonly id="numOfTriesTextArea" type="text" rows="5", cols="10"></textarea> -->
 					<div id="numOfTriesBox">
 						<p id = "numOfTries" text-align="center"> </p>
 					</div>
 
-					<br>
+					
 					<hr>
-					<br>
 					<div id="pointsLabel" align="center">
-						<label for="pointsEarned" align="center">Hints Remaining:</label>
+						<label for="pointsEarned" align="center">Points Earned:</label>
 					</div>
-					<br>
 					<!-- <textarea readonly id="numOfTriesTextArea" type="text" rows="5", cols="10"></textarea> -->
 					<div id="pointsBox">
 						<p id = "pointsValue" text-align="center"> </p>
 					</div>
+
+					
+					<hr>
+					
+					<div id="HintsLabel" align="center">
+						<label for="HintsEarned" align="center">Hints Remaining:</label>
+					</div>
+					
+					<!-- <textarea readonly id="numOfTriesTextArea" type="text" rows="5", cols="10"></textarea> -->
+					<div id="HintsBox">
+						<p id = "HintsValue" text-align="center"> </p>
+					</div>
+
 				</div>	
 			</div>		
 			<br>
