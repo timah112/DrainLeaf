@@ -15,12 +15,11 @@
 		<link rel = "stylesheet" type ="text/css" href="http://localhost:8080/DrainLeaf GAMES/CSS/hangman_index_css.css" />	
 		<link rel='icon' href="http://localhost:8080/DrainLeaf GAMES/Images/Leaf_Favicon.jpg" type='image/x-icon'/>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-		<script src = "hangman.js"></script>	
-		
+		<script src = "hangman.js"></script>
+		<script src = "BasicCalculations.js"></script>			
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-		
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>	
 
 	</head>
 	
@@ -41,13 +40,15 @@
 			</div>			
 			<div class = "container">
 				<div id="game">
+					
 					<div id="playBtn">
 						<button id ="increaseDashBtn" type="submit" onClick="onClickOnlyOnce()"> New Game </button>
 					</div>
-					<br>
 
 					<p id = "categoryTitle" align= "center"></p>
-
+					<section id="categoryImage" align= "center">
+						<img id="imageId" src="#" class="center">	
+					</section>
 					<p id = "output" align= "center"></p>				
 					<p id = "enterText" align= "center"></p>
 					
@@ -76,7 +77,7 @@
 
 					<!-- <input id="numOfTries" type="text" name="totalTries" size="5" height="48"><br> -->
 					<div id="label" align="center">
-						<label for="numOfTries" align="center">Number of Leaves Remaining: </label>
+						<label for="numOfTries" align="center">Number of Tries Remaining: </label>
 					</div>
 					
 					<!-- <textarea readonly id="numOfTriesTextArea" type="text" rows="5", cols="10"></textarea> -->
@@ -115,7 +116,7 @@
 		</div>
 	</div>		
 			<div id = "footer">
-				Copyright &copy; 2018-2019 DrainLeaf&trade; by Atif Tirmizi
+				Copyright &copy; 2018-2019 DrainLeaf&trade;
 			</div>
 				
 	</body>

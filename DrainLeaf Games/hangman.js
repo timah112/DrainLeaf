@@ -4,9 +4,9 @@
 var fruitSelection = ["APPLE", "ORANGE", "BANANA", "PEAR", "WATERMELON", "KIWI", "LEMON", "PINEAPPLE", "STRAWBERRY", "POMEGRANATE", "GRAPEFRUIT", "BLUEBERRY", "COCONUT", "CHERRY", "PEACH", "BLACKBERRY", "MANGO", "CRANBERRY", "PLUMS", "SUGARCANE"];
 var mammalSelection = ["CAT", "DOG", "ELEPHANT", "BEAR", "LION", "TIGER", "LIGER", "MONKEY", "APE", "GORILLA", "SNAKE", "MONGOOSE", "DEER", "RHINOCERAS", "ARMADILLO", "HYENA", "HORSE", "KANGAROO", "GIRAFFE", "SKUNK", "PIG", "GOAT", "LAMB", "COW", "WARTHOG", "MOOSE", "BULL"];
 var countries = ["PAKISTAN", "BANGLADESH", "CANADA", "AUSTRALIA", "SINGAPORE", "JAPAN", "GERMANY", "CHINA", "TURKEY", "SWEDEN", "NEW ZEALAND", "CUBA", "BRAZIL", "MEXICO", "FRANCE", "INDIA", "SPAIN", "COLOMBIA", "COSTA RICA", "BEHRAIN", "ARGENTINA", "AFGHANISTAN", "UAE", "AZERBAIJAN", "ECUADOR", "ALGERIA", "BURMA", "EGYPT", "LIBYA", "LEBANON", "SAUDIARABIA", "IRELAND", "IRAQ", "IRAN", "ITALY", "INDONESIA", "YEMEN", "SRILANKA", "PERU", "CHILE", "KUWAIT", "MOROCCO", "ROMANIA", "MALDIVES ISLANDS", "PANAMA", "KENYA", "CZECHIA", "JORDAN"];
-var countryCapitals = ["PARIS", "BERLIN", "BRUSSELS", "CAIRO", "AMMAN", "JERUSALEM", "BEIRUT"];
-
-var categorySelection = ["Fruits", "Mammals", "Countries", "CountryCapitals"];
+var countryCapitals = ["PARIS", "BERLIN", "BRUSSELS", "CAIRO", "AMMAN", "JERUSALEM", "BEIRUT", "TOKYO", "ISLAMABAD", "LONDON", "ROME", "OTTAWA", "WASHINGTON","MOSCOW"];
+var vegetables = ["CELERY", "CABBAGE", "GARDENASPARAGUS", "CURLYKALE", "CARROT", "LETTUCE", "GARLIC", "JICAMA", "CUCUMBER", "PARSNIP", "OKRA", "CHIVES", "KOHLRABI", "CAULIFLOWER", "BEETROOT", "GINGER", "YAM", "POTATO", "WATERCRESS", "BRUSSELSSPROUT", "ONION", "EGGPLANT", "ENDIVE", "RADISH", "MUSHROOM", "TURNIP", "DILL", "PIGWEED", "ARTICHOKE", "PEA", "KIDNEYBEAN", "LEEK", "SHALLOT", "PARSLEY", "SWEETPOTATO", "SORREL", "YARROW"];
+var categorySelection = ["Fruits", "Mammals", "Countries", "CountryCapitals", "Vegetables"];
 
 var selectRandomCategory = categorySelection[Math.floor(Math.random() * categorySelection.length)];
 var categoryLength;
@@ -18,13 +18,14 @@ var inputField = [];
 var letter;
 var selectedLetters = [];
 //Variable to get the number of tries
-var numOfTries = 6;
+var numOfTries;
 //variable to count each time the user corrects properly
 var correctGuessCounter = 0;
 
-var numOfHints = 2;
+var numOfHints =0;
 var tempNum = localStorage.getItem("totalPoints");
 let totalPoints;
+isLost = false;
 //Points Variables: 
 if (Number.isNaN(tempNum) || isNaN(tempNum) || tempNum === null) {
 	totalPoints = 0;
@@ -32,6 +33,17 @@ if (Number.isNaN(tempNum) || isNaN(tempNum) || tempNum === null) {
 	totalPoints = parseFloat(localStorage.getItem("totalPoints"));
 }
 
+var hints;
+var tempHints = parseInt(localStorage.getItem("hints"));
+
+if (Number.isNaN(tempHints) || isNaN(tempHints) || tempHints === null) {
+	hints = 5;
+}else if(tempHints===0 && isLost){
+    hints =5;
+} 
+else {
+	hints = parseFloat(localStorage.getItem("hints"));
+}
 
 var pointsEarned = 5;
 var finalTotalPoints;
@@ -39,17 +51,36 @@ var finalTotalPoints;
 var actualSelectionArray = [];
 var selectedRandomElement;
 
+//Function that selects an element from the randomly selected category.
 function selectCategory() {
-
-	if (selectRandomCategory === "Fruits") actualSelectionArray = fruitSelection.slice();
-	if (selectRandomCategory === "Mammals") actualSelectionArray = mammalSelection.slice();
-	if (selectRandomCategory === "Countries") actualSelectionArray = countries.slice();
-	if (selectRandomCategory === "CountryCapitals") actualSelectionArray = countryCapitals.slice();
-
-	//Pick a element randomly from the selected array
+    //Copy elements from one array to another:
+	if (selectRandomCategory === "Fruits"){
+		actualSelectionArray = fruitSelection.slice();
+		document.getElementById("imageId").src = "http://localhost:8080/DrainLeaf GAMES/Images/fruits.jpg";
+	}
+	if (selectRandomCategory === "Mammals"){
+		actualSelectionArray = mammalSelection.slice();
+		document.getElementById("imageId").src = "http://localhost:8080/DrainLeaf GAMES/Images/animals.jpg";
+	} 
+	if (selectRandomCategory === "Countries") {
+		actualSelectionArray = countries.slice();
+		document.getElementById("imageId").src = "http://localhost:8080/DrainLeaf GAMES/Images/countries.jpg";
+	}
+	if(selectRandomCategory === "Vegetables"){
+		actualSelectionArray = vegetables.slice();
+		document.getElementById("imageId").src = "http://localhost:8080/DrainLeaf GAMES/Images/vegetables.jpg";
+	} 
+	if (selectRandomCategory === "CountryCapitals") {
+		actualSelectionArray = countryCapitals.slice();
+		document.getElementById("imageId").src = "http://localhost:8080/DrainLeaf GAMES/Images/capitalCities.jpg";
+		selectRandomCategory = "Country Capitals";
+	}
+	
+	//Pick an element randomly from the selected array
 	selectedRandomElement = actualSelectionArray[Math.floor(Math.random() * actualSelectionArray.length)];
 	//Get the length of that chosen Element .
 	categoryLength = selectedRandomElement.length;
+	numOfTries = parseInt(categoryLength) - 2;
 	return selectedRandomElement;
 }
 
@@ -63,12 +94,12 @@ var onLoadFuction = window.addEventListener("load", function (windowLoadE) {
 	selectCategory();
 	document.getElementById("numOfTries").innerHTML = numOfTries;
 	document.getElementById("pointsValue").innerHTML = Math.round(totalPoints);
-	if (categoryLength > 5) {
-		numOfHints = Math.abs(categoryLength / 2 - 2);
-		document.getElementById("HintsValue").innerHTML = Math.round(numOfHints);
-	} else {
-		document.getElementById("HintsValue").innerHTML = Math.round(numOfHints);
-	}
+	// if (categoryLength > 5) {
+	// 	numOfHints = Math.abs(categoryLength / 2 - 2);
+	document.getElementById("HintsValue").innerHTML = Math.round(hints);
+	// } else {
+	// 	document.getElementById("HintsValue").innerHTML = Math.round(numOfHints);
+	// }
 	addFields();
 	setInterval(makeAlert, 500);
 });
@@ -82,7 +113,8 @@ This function checks if the counter for a field thats clicked is more than once,
 function onClickOnlyOnce() {
 	if (addFieldCounter < 1) {
 		//document.getElementById("pointsValue").innerHTML = totalPoints;
-		document.getElementById("pointsValue").innerHTML = Math.round(numOfHints);
+		document.getElementById("pointsValue").innerHTML = Math.round(totalPoints);
+		document.getElementById("HintsValue").innerHTML = Math.round(hints);
 		addFields();
 	} else {
 		//var addFieldsFunc = new addFields();		
@@ -99,10 +131,6 @@ function addFields() {
 
 	//make the dashes the same number of the chosen fruit:
 	var fruitLengthSentence = document.getElementById("output");
-	//var text = document.createTextNode(fruitLength); //calls the value of Fruit Length:
-
-	//fruitLengthSentence.appendChild(text);
-
 	document.getElementById("categoryTitle").innerHTML = "The Category is: " + selectRandomCategory;
 	document.getElementById("categoryTitle").style.fontSize = "large";
 
@@ -136,6 +164,8 @@ function displayFields() {
 		}
 		letter = String.fromCharCode(i);
 		button = document.createElement("button");
+		button.style.width = '40px'; // setting the width to 200px
+		button.style.height = '40px'; // setting the height to 200px
 		button.innerHTML = letter;
 		button.setAttribute("data-letter", letter);
 		button.onclick = function (e) { setLetter(this.getAttribute("data-letter")); };
@@ -163,6 +193,9 @@ function setLetter(letter) {
 	else if (isTimeOut) {
 		totalPoints = 0;
 		localStorage.setItem("totalPoints", totalPoints);
+		hints = 5;
+		localStorage.setItem("hints", hints);
+		isLost = true;
 		swal("Sorry, you are out of Time. The correct word was: " + selectedRandomElement + "\n  \n \Click 'New Game' to continue");
 	}
 	else if (chosenLetterFromKeys.includes(letter)) {
@@ -175,6 +208,9 @@ function setLetter(letter) {
 	else {
 		totalPoints = 0;
 		localStorage.setItem("totalPoints", totalPoints);
+		hints = 5;
+		localStorage.setItem("hints", hints);
+		isLost = true;
 		swal("Sorry, you are out of tries. The correct word was: " + selectedRandomElement + "\n  \n \Click 'New Game' to continue");
 	}
 }
@@ -237,22 +273,26 @@ var hintsIndex = [];
 function checkHint() {
 	//Loop through the selected Word.
 	//Any letter that is not previously selected, give a letter hint to the user.
-	if (numOfHints > 0) {
+	if (hints > 0) {
 		for (var i = 0; i < categoryLength; i++) {
 			if (!chosenLetterFromKeys.includes(selectedRandomElement.charAt(i)) && (!hintsIndex.includes(i))) {
 				selectedLetters.push(selectedRandomElement.charAt(i));
 				hintsIndex.push(i);
 				inputField[i].value = selectedRandomElement.charAt(i);
 				correctGuessCounter++;
-				numOfHints--;
-				document.getElementById("HintsValue").innerHTML = Math.round(numOfHints);
+				hints--;
+				localStorage.setItem("hints", hints);
+				document.getElementById("HintsValue").innerHTML = Math.round(hints);
 				break;
 			}
 		}
 	}
 	if (correctGuessCounter >= categoryLength) {
-		document.getElementById("pointsValue").innerHTML = numOfHints;
+		totalPoints += pointsEarned;
+		document.getElementById("HintsValue").innerHTML = hints;
 		isWordFound = true;
+		localStorage.setItem("totalPoints", totalPoints);
+		document.getElementById("pointsValue").innerHTML = JSON.parse(localStorage.getItem("totalPoints"));
 		swal("CONGRATS!", ", You got the right word!", "success");
 	}
 }
