@@ -166,6 +166,9 @@ function displayFields() {
 		button = document.createElement("button");
 		button.style.width = '40px'; // setting the width to 200px
 		button.style.height = '40px'; // setting the height to 200px
+		button.style.background = 'teal'; // setting the background color to teal
+		button.style.color = 'white'; // setting the color to white
+		button.style.fontSize = '20px';
 		button.innerHTML = letter;
 		button.setAttribute("data-letter", letter);
 		button.onclick = function (e) { setLetter(this.getAttribute("data-letter")); };
