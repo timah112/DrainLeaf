@@ -56,23 +56,23 @@ function selectCategory() {
     //Copy elements from one array to another:
 	if (selectRandomCategory === "Fruits"){
 		actualSelectionArray = fruitSelection.slice();
-		document.getElementById("imageId").src = "http://localhost:8080/DrainLeaf GAMES/Images/fruits.jpg";
+		document.getElementById("imageId").src = "http://localhost:9000/DrainLeaf GAMES/Images/fruits.jpg";
 	}
 	if (selectRandomCategory === "Mammals"){
 		actualSelectionArray = mammalSelection.slice();
-		document.getElementById("imageId").src = "http://localhost:8080/DrainLeaf GAMES/Images/animals.jpg";
+		document.getElementById("imageId").src = "http://localhost:9000/DrainLeaf GAMES/Images/animals.jpg";
 	} 
 	if (selectRandomCategory === "Countries") {
 		actualSelectionArray = countries.slice();
-		document.getElementById("imageId").src = "http://localhost:8080/DrainLeaf GAMES/Images/countries.jpg";
+		document.getElementById("imageId").src = "http://localhost:9000/DrainLeaf GAMES/Images/countries.jpg";
 	}
 	if(selectRandomCategory === "Vegetables"){
 		actualSelectionArray = vegetables.slice();
-		document.getElementById("imageId").src = "http://localhost:8080/DrainLeaf GAMES/Images/vegetables.jpg";
+		document.getElementById("imageId").src = "http://localhost:9000/DrainLeaf GAMES/Images/vegetables.jpg";
 	} 
 	if (selectRandomCategory === "CountryCapitals") {
 		actualSelectionArray = countryCapitals.slice();
-		document.getElementById("imageId").src = "http://localhost:8080/DrainLeaf GAMES/Images/capitalCities.jpg";
+		document.getElementById("imageId").src = "http://localhost:9000/DrainLeaf GAMES/Images/capitalCities.jpg";
 		selectRandomCategory = "Country Capitals";
 	}
 	

@@ -10,7 +10,7 @@
             "request": "launch",
             "name": "Launch Chrome against localhost",
             //"url": "file:///C:/Users/Atirmizi/OneDrive%20-%20EHE/PERSONAL/PERSONAL/DrainLeaf/DrainLeaf/DrainLeaf%20Games/hangman.htm#",
-            "url": "http://localhost:8080/DrainLeaf GAMES/hangman.htm",
+            "url": "http://localhost:9000/DrainLeaf GAMES/hangman.htm",
             "webRoot": "${workspaceFolder}/DRAINLEAF GAMES/hangman.htm"
         }
     ]
