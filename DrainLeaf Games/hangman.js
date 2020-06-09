@@ -3,7 +3,7 @@
 /** set a variable to pick directly from a fruit. */
 var fruitSelection = ["APPLE", "ORANGE", "BANANA", "PEAR", "WATERMELON", "KIWI", "LEMON", "PINEAPPLE", "STRAWBERRY", "POMEGRANATE", "GRAPEFRUIT", "BLUEBERRY", "COCONUT", "CHERRY", "PEACH", "BLACKBERRY", "MANGO", "CRANBERRY", "PLUMS", "SUGARCANE"];
 var mammalSelection = ["CAT", "DOG", "ELEPHANT", "BEAR", "LION", "TIGER", "LIGER", "MONKEY", "APE", "GORILLA", "SNAKE", "MONGOOSE", "DEER", "RHINOCERAS", "ARMADILLO", "HYENA", "HORSE", "KANGAROO", "GIRAFFE", "SKUNK", "PIG", "GOAT", "LAMB", "COW", "WARTHOG", "MOOSE", "BULL"];
-var countries = ["PAKISTAN", "BANGLADESH", "CANADA", "AUSTRALIA", "SINGAPORE", "JAPAN", "GERMANY", "CHINA", "TURKEY", "SWEDEN", "NEW ZEALAND", "CUBA", "BRAZIL", "MEXICO", "FRANCE", "INDIA", "SPAIN", "COLOMBIA", "COSTA RICA", "BEHRAIN", "ARGENTINA", "AFGHANISTAN", "UAE", "AZERBAIJAN", "ECUADOR", "ALGERIA", "BURMA", "EGYPT", "LIBYA", "LEBANON", "SAUDIARABIA", "IRELAND", "IRAQ", "IRAN", "ITALY", "INDONESIA", "YEMEN", "SRILANKA", "PERU", "CHILE", "KUWAIT", "MOROCCO", "ROMANIA", "MALDIVES ISLANDS", "PANAMA", "KENYA", "CZECHIA", "JORDAN"];
+var countries = ["PAKISTAN", "BANGLADESH", "CANADA", "AUSTRALIA", "SINGAPORE", "JAPAN", "GERMANY", "CHINA", "TURKEY", "SWEDEN", "NEWZEALAND", "CUBA", "BRAZIL", "MEXICO", "FRANCE", "INDIA", "SPAIN", "COLOMBIA", "COSTARICA", "BEHRAIN", "ARGENTINA", "AFGHANISTAN", "UAE", "AZERBAIJAN", "ECUADOR", "ALGERIA", "BURMA", "EGYPT", "LIBYA", "LEBANON", "SAUDIARABIA", "IRELAND", "IRAQ", "IRAN", "ITALY", "INDONESIA", "YEMEN", "SRILANKA", "PERU", "CHILE", "KUWAIT", "MOROCCO", "ROMANIA", "MALDIVESISLANDS", "PANAMA", "KENYA", "CZECHIA", "JORDAN"];
 var countryCapitals = ["PARIS", "BERLIN", "BRUSSELS", "CAIRO", "AMMAN", "JERUSALEM", "BEIRUT", "TOKYO", "ISLAMABAD", "LONDON", "ROME", "OTTAWA", "WASHINGTON","MOSCOW"];
 var vegetables = ["CELERY", "CABBAGE", "GARDENASPARAGUS", "CURLYKALE", "CARROT", "LETTUCE", "GARLIC", "JICAMA", "CUCUMBER", "PARSNIP", "OKRA", "CHIVES", "KOHLRABI", "CAULIFLOWER", "BEETROOT", "GINGER", "YAM", "POTATO", "WATERCRESS", "BRUSSELSSPROUT", "ONION", "EGGPLANT", "ENDIVE", "RADISH", "MUSHROOM", "TURNIP", "DILL", "PIGWEED", "ARTICHOKE", "PEA", "KIDNEYBEAN", "LEEK", "SHALLOT", "PARSLEY", "SWEETPOTATO", "SORREL", "YARROW"];
 var categorySelection = ["Fruits", "Mammals", "Countries", "CountryCapitals", "Vegetables"];
@@ -25,17 +25,30 @@ var correctGuessCounter = 0;
 var numOfHints =0;
 var tempNum = localStorage.getItem("totalPoints");
 let totalPoints;
+
 isLost = false;
 //Points Variables: 
 if (Number.isNaN(tempNum) || isNaN(tempNum) || tempNum === null) {
 	totalPoints = 0;
+	highScore = 0;
 } else {
 	totalPoints = parseFloat(localStorage.getItem("totalPoints"));
 }
 
+var highScore;
+var temHighScore = parseInt(localStorage.getItem("highScore"));
+if (Number.isNaN(temHighScore) || isNaN(temHighScore) || temHighScore === null) {
+	highScore = parseInt(0);
+} else {
+	highScore = parseInt(localStorage.getItem("highScore"));
+	if(totalPoints >= highScore){
+		highScore = parseInt(totalPoints);
+	}
+}
+
+
 var hints;
 var tempHints = parseInt(localStorage.getItem("hints"));
-
 if (Number.isNaN(tempHints) || isNaN(tempHints) || tempHints === null) {
 	hints = 5;
 }else if(tempHints===0 && isLost){
@@ -93,13 +106,10 @@ function selectCategory() {
 var onLoadFuction = window.addEventListener("load", function (windowLoadE) {
 	selectCategory();
 	document.getElementById("numOfTries").innerHTML = numOfTries;
-	document.getElementById("pointsValue").innerHTML = Math.round(totalPoints);
-	// if (categoryLength > 5) {
-	// 	numOfHints = Math.abs(categoryLength / 2 - 2);
+	document.getElementById("pointsValue").innerHTML = Math.round(totalPoints);	
 	document.getElementById("HintsValue").innerHTML = Math.round(hints);
-	// } else {
-	// 	document.getElementById("HintsValue").innerHTML = Math.round(numOfHints);
-	// }
+	document.getElementById("ScoreValue").innerHTML = Math.round(highScore);
+	
 	addFields();
 	setInterval(makeAlert, 500);
 });
@@ -194,10 +204,13 @@ function setLetter(letter) {
 		onClickOnlyOnce();
 	}
 	else if (isTimeOut) {
+		updateHighScore();
 		totalPoints = 0;
 		localStorage.setItem("totalPoints", totalPoints);
+		document.getElementById("pointsValue").innerHTML = Math.round(totalPoints);	
 		hints = 5;
 		localStorage.setItem("hints", hints);
+		document.getElementById("HintsValue").innerHTML = Math.round(hints);
 		isLost = true;
 		swal("Sorry, you are out of Time. The correct word was: " + selectedRandomElement + "\n  \n \Click 'New Game' to continue");
 	}
@@ -209,6 +222,7 @@ function setLetter(letter) {
 		findIndex(letter, selectedRandomElement);
 	}
 	else {
+		updateHighScore();
 		totalPoints = 0;
 		localStorage.setItem("totalPoints", totalPoints);
 		hints = 5;
@@ -217,18 +231,6 @@ function setLetter(letter) {
 		swal("Sorry, you are out of tries. The correct word was: " + selectedRandomElement + "\n  \n \Click 'New Game' to continue");
 	}
 }
-
-/**-----------------------------------------------------------------------
-function enterIntoField(inputField, letter){
-	//var letterIndex = findIndex(letter, selectedRandomWord);
-	
-	if(indexCounter != 0){
-		//document.forms[0].elements[0].innerHTML = letter;
-		//var s = $('#textBox').val();
-		inputField[letterIndex].value = letter;
-	}
-}
-**/
 
 /**
 Function that compares the current letter with the fruit variable. If the Fruit String contains that letter,
@@ -258,10 +260,8 @@ function findIndex(letter, selectedRandomWord) {
 
 		//alert(JSON.parse( localStorage.getItem("totalPoints")));
 		document.getElementById("pointsValue").innerHTML = JSON.parse(localStorage.getItem("totalPoints"));
-		//sessionStorage.setItem("totalPoints", totalPoints);
-		//finalTotalPoints = sessionStorage.getItem("totalPoints");
-		//document.getElementById("pointsValue").innerHTML = numOfHints;
 		isWordFound = true;
+		updateHighScore();
 		swal("CONGRATS!", ", You got the right word!", "success");
 	}
 	return index;
@@ -296,6 +296,7 @@ function checkHint() {
 		isWordFound = true;
 		localStorage.setItem("totalPoints", totalPoints);
 		document.getElementById("pointsValue").innerHTML = JSON.parse(localStorage.getItem("totalPoints"));
+		updateHighScore();
 		swal("CONGRATS!", ", You got the right word!", "success");
 	}
 }
@@ -328,17 +329,19 @@ function wait(ms) {
 	}
 }
 
+function updateHighScore(){
+	if(totalPoints > highScore){
+		highScore = totalPoints;
+		localStorage.setItem("highScore", highScore);
+		swal("Congrats! You have a new high score!");
+		document.getElementById("ScoreValue").innerHTML = Math.round(highScore);
+	}
+}
+
 //This function runs each time after a word is selected if the correct word is guessed.
 function reconfirmEachLetter() {
 
 }
-
-
-/**
-Function to give the user a total points calculations!
-
-**/
-
 
 /**
 Function to allow the user to guess the entire word. If they can guess it, they get points:
