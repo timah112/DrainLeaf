@@ -89,7 +89,7 @@ function selectCategory() {
 		selectRandomCategory = "Country Capitals";
 	}if(selectRandomCategory === "Movies"){
 		actualSelectionArray = movies.slice();
-		document.getElementById("imageId").src = "Images/Movies.png";
+		document.getElementById("imageId").src = "Images/Movies.jpg";
 	} 
 	
 	//Pick an element randomly from the selected array
